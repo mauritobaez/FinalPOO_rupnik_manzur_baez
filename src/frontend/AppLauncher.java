@@ -11,6 +11,7 @@ public class AppLauncher extends Application {
 		launch(args);
 	}
 
+	//Esto es un comentario!
 	@Override
 	public void start(Stage primaryStage) {
 		CanvasState canvasState = new CanvasState(); // BackEnd

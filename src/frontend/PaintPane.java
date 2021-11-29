@@ -127,6 +127,7 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+				//lol instanceof
 				if(selectedFigure instanceof Rectangle) {
 					Rectangle rectangle = (Rectangle) selectedFigure;
 					rectangle.getTopLeft().x += diffX;
@@ -134,6 +135,7 @@ public class PaintPane extends BorderPane {
 					rectangle.getTopLeft().y += diffY;
 					rectangle.getBottomRight().y += diffY;
 				} else if(selectedFigure instanceof Circle) {
+					//jsjajajaj wtfff
 					Circle circle = (Circle) selectedFigure;
 					circle.getCenterPoint().x += diffX;
 					circle.getCenterPoint().y += diffY;

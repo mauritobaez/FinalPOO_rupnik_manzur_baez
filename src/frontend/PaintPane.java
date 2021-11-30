@@ -5,6 +5,7 @@ import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
+import frontend.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -17,6 +18,8 @@ import javafx.scene.paint.Color;
 
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaintPane extends BorderPane {
 
@@ -30,12 +33,10 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
+
 	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	ToggleButton circleButton = new ToggleButton("Círculo");
-	ToggleButton squareButton = new ToggleButton("Cuadrado");
-	ToggleButton lineButton = new ToggleButton("Línea");
-	ToggleButton elipseButton = new ToggleButton("Elipse");
+	List<FigureButton> figureButtons = new ArrayList<>();
+
 
 	// Dibujar una figura
 	Point startPoint;
@@ -47,15 +48,25 @@ public class PaintPane extends BorderPane {
 	StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
+		figureButtons.add(new RectangleButton("Rectángulo"));
+		figureButtons.add(new CircleButton("Círculo"));
+		figureButtons.add(new SquareButton("Cuadrado"));
+		figureButtons.add(new LineButton("Línea"));
+		figureButtons.add(new EllipseButton("Elipse"));
+
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, lineButton, elipseButton};
+
+		List<ToggleButton> toolsArr = new ArrayList<>();
+		toolsArr.add(selectionButton);
+		toolsArr.addAll(figureButtons);
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
+
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
 		buttonsBox.setPadding(new Insets(5));
@@ -74,15 +85,15 @@ public class PaintPane extends BorderPane {
 				return ;
 			}
 			Figure newFigure = null;
-			if(rectangleButton.isSelected()) {
-				newFigure = new Rectangle(startPoint, endPoint);
+			boolean noneSelected = true;
+			for (FigureButton button : figureButtons ) {
+				if(button.isSelected())
+				{
+					newFigure = button.createFigure(startPoint,endPoint);
+					noneSelected = false;
+				}
 			}
-			else if(circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-				newFigure = new Circle(startPoint, circleRadius);
-			} else {
-				return ;
-			}
+			if(noneSelected) return;
 			canvasState.addFigure(newFigure);
 			startPoint = null;
 			redrawCanvas();

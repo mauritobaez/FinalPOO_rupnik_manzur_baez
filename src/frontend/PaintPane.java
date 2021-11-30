@@ -5,6 +5,7 @@ import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
+import frontend.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +15,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaintPane extends BorderPane {
 
@@ -27,12 +31,13 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
+
 	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	ToggleButton circleButton = new ToggleButton("Círculo");
-	ToggleButton squareButton = new ToggleButton("Cuadrado");
-	ToggleButton lineButton = new ToggleButton("Línea");
-	ToggleButton elipseButton = new ToggleButton("Elipse");
+	List<FigureButton> figureButtons = new ArrayList<>();
+	figureButtons.add(new RectangleButton("Rectángulo"));
+
+	//FigureButton figureButtons = {new RectangleButton("Rectángulo"), new CircleButton("Círculo"), new SquareButton("Cuadrado"), new LineButton("Línea"), new EllipseButton("Elipse")};
+
 
 	// Dibujar una figura
 	Point startPoint;
@@ -46,7 +51,9 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, lineButton, elipseButton};
+		List<ToggleButton> toolsArr = new ArrayList<>();
+		toolsArr.add(selectionButton);
+		toolsArr.addAll(figureButtons);
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);

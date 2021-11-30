@@ -93,7 +93,7 @@ public class PaintPane extends BorderPane {
 			StringBuilder label = new StringBuilder();
 			Figure result = figureAtPosition(eventPoint);
 			if(result!=null) {
-				statusPane.updateStatus(label.append(result.toString()).toString());
+				statusPane.updateStatus(label.append(result).toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
 			}
@@ -107,7 +107,7 @@ public class PaintPane extends BorderPane {
 				Figure result = figureAtPosition(eventPoint);
 				if (result!=null) {
 					selectedFigure=result;
-					statusPane.updateStatus(label.append(result.toString()).toString());
+					statusPane.updateStatus(label.append(result).toString());
 				} else {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");

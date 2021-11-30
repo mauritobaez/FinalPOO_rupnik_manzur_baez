@@ -5,7 +5,7 @@ import backend.model.Figure;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
+
 
 public class CanvasState {
 
@@ -19,6 +19,7 @@ public class CanvasState {
         return new ArrayList<>(list);
     }
 
+    // Para iterar "al revés"
     public Iterable<Figure> figuresReverse(){
         Deque<Figure> myDeque = new LinkedList<>();
         for(Figure fig : list){

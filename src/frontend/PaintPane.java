@@ -15,6 +15,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.Iterator;
+import java.util.Optional;
+
 public class PaintPane extends BorderPane {
 
 	// BackEnd
@@ -88,14 +91,9 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
-			for(Figure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
-					found = true;
-					label.append(figure.toString());
-				}
-			}
-			if(found) {
-				statusPane.updateStatus(label.toString());
+			Figure result = figureAtPosition(eventPoint);
+			if(result!=null) {
+				statusPane.updateStatus(label.append(result.toString()).toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
 			}
@@ -106,15 +104,10 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (Figure figure : canvasState.figures()) {
-					if(figureBelongs(figure, eventPoint)) {
-						found = true;
-						selectedFigure = figure;
-						label.append(figure.toString());
-					}
-				}
-				if (found) {
-					statusPane.updateStatus(label.toString());
+				Figure result = figureAtPosition(eventPoint);
+				if (result!=null) {
+					selectedFigure=result;
+					statusPane.updateStatus(label.append(result.toString()).toString());
 				} else {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
@@ -183,6 +176,17 @@ public class PaintPane extends BorderPane {
 					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
 		}
 		return found;
+	}
+
+	//auxiliar que devuelve la figura sobre la cual está el mouse
+	private Figure figureAtPosition(Point position){
+
+		for(Figure figure : canvasState.figuresReverse()){
+			if(figureBelongs(figure, position))
+				return figure;
+		}
+		//si no encuentra retorna null
+		return null;
 	}
 
 }

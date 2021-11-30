@@ -34,9 +34,6 @@ public class PaintPane extends BorderPane {
 
 	ToggleButton selectionButton = new ToggleButton("Seleccionar");
 	List<FigureButton> figureButtons = new ArrayList<>();
-	figureButtons.add(new RectangleButton("Rectángulo"));
-
-	//FigureButton figureButtons = {new RectangleButton("Rectángulo"), new CircleButton("Círculo"), new SquareButton("Cuadrado"), new LineButton("Línea"), new EllipseButton("Elipse")};
 
 
 	// Dibujar una figura
@@ -49,8 +46,15 @@ public class PaintPane extends BorderPane {
 	StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
+		figureButtons.add(new RectangleButton("Rectángulo"));
+		figureButtons.add(new CircleButton("Círculo"));
+		figureButtons.add(new SquareButton("Cuadrado"));
+		figureButtons.add(new LineButton("Línea"));
+		figureButtons.add(new EllipseButton("Elipse"));
+
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+
 		List<ToggleButton> toolsArr = new ArrayList<>();
 		toolsArr.add(selectionButton);
 		toolsArr.addAll(figureButtons);
@@ -60,6 +64,7 @@ public class PaintPane extends BorderPane {
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
+
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
 		buttonsBox.setPadding(new Insets(5));
@@ -78,15 +83,15 @@ public class PaintPane extends BorderPane {
 				return ;
 			}
 			Figure newFigure = null;
-			if(rectangleButton.isSelected()) {
-				newFigure = new Rectangle(startPoint, endPoint);
+			boolean noneSelected = true;
+			for (FigureButton button : figureButtons ) {
+				if(button.isSelected())
+				{
+					newFigure = button.createFigure(startPoint,endPoint);
+					noneSelected = false;
+				}
 			}
-			else if(circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-				newFigure = new Circle(startPoint, circleRadius);
-			} else {
-				return ;
-			}
+			if(noneSelected) return;
 			canvasState.addFigure(newFigure);
 			startPoint = null;
 			redrawCanvas();

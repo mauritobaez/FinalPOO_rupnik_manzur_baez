@@ -8,13 +8,13 @@ public class Circle extends Ellipse {
 
     @Override
     public String toString() {
-        return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), getsMayorAxis());
+        return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), getsXAxis());
     }
 
 
 
     public double getRadius() {
-        return getsMayorAxis();
+        return getsXAxis();
     }
 
 }

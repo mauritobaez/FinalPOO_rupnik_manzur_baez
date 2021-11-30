@@ -3,30 +3,30 @@ package backend.model;
 public class Ellipse extends Figure {
 
     private final Point centerPoint;
-    private final double sMayorAxis;
-    private final double sMinorAxis;
+    private final double sXAxis;
+    private final double sYAxis;
 
-    public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis) {
+    public Ellipse(Point centerPoint, double sXAxis, double sYAxis) {
         this.centerPoint = centerPoint;
-        this.sMayorAxis = sMayorAxis;
-        this.sMinorAxis = sMinorAxis;
+        this.sXAxis = sXAxis;
+        this.sYAxis = sYAxis;
     }
 
     public Point getCenterPoint() {
         return centerPoint;
     }
 
-    public double getsMayorAxis() {
-        return sMayorAxis;
+    public double getsXAxis() {
+        return sXAxis;
     }
 
-    public double getsMinorAxis(){
-        return sMinorAxis;
+    public double getsYAxis(){
+        return sYAxis;
     }
 
     @Override
     public String toString() {
-        return String.format("Elipse [Centro: %s, DMayor: %.2f, DMenor: %.2f]", centerPoint, sMayorAxis, sMinorAxis);
+        return String.format("Elipse [Centro: %s, SemiejeHoriz: %.2f, SemiejeVert: %.2f]", centerPoint, sXAxis, sYAxis);
     }
 
 }

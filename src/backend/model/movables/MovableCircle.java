@@ -1,4 +1,6 @@
-package backend.model;
+package backend.model.movables;
+
+import backend.model.Circle;
 
 import java.util.ArrayList;
 import java.util.Collection;

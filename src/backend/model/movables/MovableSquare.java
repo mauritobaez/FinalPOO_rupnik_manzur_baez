@@ -1,4 +1,6 @@
-package backend.model;
+package backend.model.movables;
+
+import backend.model.Square;
 
 import java.util.ArrayList;
 import java.util.Collection;

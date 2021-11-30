@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.movables;
 
 import java.util.Collection;
 

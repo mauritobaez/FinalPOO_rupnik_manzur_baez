@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.movables;
 
 public interface Movable{
     void moveX(double diff);

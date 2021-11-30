@@ -8,11 +8,11 @@ public class Line extends Figure{
         this.endingPoint = endingPoint;
     }
 
-    public Point getstartingPoint() {
+    public Point getStartingPoint() {
         return startingPoint;
     }
 
-    public Point getendingPoint() {
+    public Point getEndingPoint() {
         return endingPoint;
     }
 

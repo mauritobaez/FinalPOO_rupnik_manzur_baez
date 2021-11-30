@@ -1,8 +1,8 @@
 package backend.model;
 
 public class Point {
-
-    public double x, y;
+    ///Cambio de protected de public, mala practica
+    protected double x, y;
 
     public Point(double x, double y) {
         this.x = x;

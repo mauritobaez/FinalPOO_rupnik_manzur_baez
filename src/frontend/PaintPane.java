@@ -33,6 +33,9 @@ public class PaintPane extends BorderPane {
 	// Botones Barra Izquierda
 
 	ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	Button deleteButton = new Button("Borrar");
+	Button toFrontButton = new Button("Al frente");
+	Button toBackButton = new Button("Al fondo");
 	List<FigureButton> figureButtons = new ArrayList<>();
 
 
@@ -58,6 +61,14 @@ public class PaintPane extends BorderPane {
 		List<ToggleButton> toolsArr = new ArrayList<>();
 		toolsArr.add(selectionButton);
 		toolsArr.addAll(figureButtons);
+		List<Button> extraButtonsArr = new ArrayList<>();
+		extraButtonsArr.add(deleteButton);
+		extraButtonsArr.add(toFrontButton);
+		extraButtonsArr.add(toBackButton);
+		for(Button button : extraButtonsArr){
+			button.setMinWidth(90);
+			button.setCursor(Cursor.HAND);
+		}
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -73,6 +84,7 @@ public class PaintPane extends BorderPane {
 		ColorPicker fillColorPicker = new ColorPicker(fillColor);
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
+		buttonsBox.getChildren().addAll(extraButtonsArr);
 		buttonsBox.getChildren().add(borderLabel);
 		buttonsBox.getChildren().add(slider);
 		buttonsBox.getChildren().add(borderColorPicker);
@@ -138,45 +150,58 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		canvas.setOnMouseDragged(event -> {
-			if(selectionButton.isSelected()) {
+			if(!checkSelectedAndNull())
+				return;
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(selectedFigure==null) return;
 				MovableFigure figure = (MovableFigure) selectedFigure;
 				figure.moveX(diffX);
 				figure.moveY(diffY);
 				redrawCanvas();
-			}
 		});
 		fillColorPicker.setOnAction(event -> {
-			if(selectionButton.isSelected())
-			{
-				if(selectedFigure==null) return;
-				DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
-				figure.setFillColor(fillColorPicker.getValue());
-				redrawCanvas();
-			}
+			if(!checkSelectedAndNull())
+				return;
+			DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
+			figure.setFillColor(fillColorPicker.getValue());
+			redrawCanvas();
+
 		});
 		borderColorPicker.setOnAction(event -> {
-			if(selectionButton.isSelected())
-			{
-				if(selectedFigure==null) return;
+			if(!checkSelectedAndNull())
+			return;
 				DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
 				figure.setStrokeColor(borderColorPicker.getValue());
 				redrawCanvas();
-			}
 		});
 		slider.setOnMouseReleased(event -> {
-			if(selectionButton.isSelected())
-			{
-				if(selectedFigure==null) return;
-				DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
-				figure.setStrokeWidth(slider.getValue());
-				redrawCanvas();
-			}
+			if(!checkSelectedAndNull())
+				return;
+			DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
+			figure.setStrokeWidth(slider.getValue());
+			redrawCanvas();
 		});
+		toFrontButton.setOnAction(event -> {
+			if(!checkSelectedAndNull())
+				 return;
+			canvasState.moveFigureToLast(selectedFigure);
+			redrawCanvas();
+		});
+		toBackButton.setOnAction(event -> {
+			if(!checkSelectedAndNull())
+				return;
+			canvasState.moveFigureToFirst(selectedFigure);
+			redrawCanvas();
 
+		});
+		deleteButton.setOnAction(event -> {
+			if(!checkSelectedAndNull())
+				 return;
+			canvasState.remove(selectedFigure);
+			redrawCanvas();
+
+		});
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -207,6 +232,10 @@ public class PaintPane extends BorderPane {
 		}
 		//si no encuentra retorna null
 		return null;
+	}
+
+	private boolean checkSelectedAndNull(){
+		return selectionButton.isSelected() && selectedFigure!=null;
 	}
 
 }

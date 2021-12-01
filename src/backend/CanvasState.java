@@ -15,6 +15,20 @@ public class CanvasState {
         list.addLast(figure);
     }
 
+    public void moveFigureToFirst(Figure figure){
+        remove(figure);
+        list.addFirst(figure);
+    }
+
+    public void moveFigureToLast(Figure figure){
+        remove(figure);
+        list.addLast(figure);
+    }
+
+    public void remove(Figure figure){
+        list.remove(figure);
+    }
+
     public Iterable<Figure> figures() {
         return new ArrayList<>(list);
     }

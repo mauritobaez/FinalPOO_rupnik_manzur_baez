@@ -53,7 +53,7 @@ public class DrawableMovableLine extends MovableLine implements DrawableMovableF
     }
 
     @Override
-    public boolean isContained(Point topLeft, Point bottomRight) {//No se si funca
-    return isContainedRect(topLeft,bottomRight,getStartingPoint(),getEndingPoint())||isContainedRect(topLeft,bottomRight,getEndingPoint(),getStartingPoint());
+    public boolean isContained(Point topLeft, Point bottomRight) {
+        return isContainedLine(topLeft,bottomRight,getStartingPoint(),getEndingPoint());
     }
 }

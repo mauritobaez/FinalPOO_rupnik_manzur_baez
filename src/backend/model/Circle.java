@@ -11,7 +11,11 @@ public class Circle extends Ellipse {
         return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), getsXAxis());
     }
 
-
+    @Override
+   public boolean pointInFigure(Point point) {
+        return Math.sqrt(Math.pow(getCenterPoint().getX() - point.getX(), 2) +
+                Math.pow(getCenterPoint().getY() - point.getY(), 2)) < getRadius();
+    }
 
     public double getRadius() {
         return getsXAxis();

@@ -166,7 +166,7 @@ public class PaintPane extends BorderPane {
 
 		}
 	}
-
+	/* No se usa
 	boolean figureBelongs(Figure figure, Point eventPoint) {
 		boolean found = false;
 		if(figure instanceof Rectangle) {
@@ -179,14 +179,15 @@ public class PaintPane extends BorderPane {
 					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
 		}
 		return found;
-	}
+	}*/
 
 	//auxiliar que devuelve la figura sobre la cual está el mouse
 	private Figure figureAtPosition(Point position){
 
 		for(Figure figure : canvasState.figuresReverse()){
-			if(figureBelongs(figure, position))
+			if(figure.pointInFigure(position)){
 				return figure;
+			}
 		}
 		//si no encuentra retorna null
 		return null;

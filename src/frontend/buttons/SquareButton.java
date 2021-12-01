@@ -3,6 +3,9 @@ package frontend.buttons;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Square;
+import backend.model.movables.MovablePoint;
+import frontend.DrawableMovable.DrawableMovableFigure;
+import frontend.DrawableMovable.DrawableMovableSquare;
 
 public class SquareButton extends FigureButton{
     public SquareButton(String name) {
@@ -10,7 +13,7 @@ public class SquareButton extends FigureButton{
     }
 
     @Override
-    public Figure createFigure(Point startPoint, Point endPoint) {
-        return new Square(startPoint, endPoint);
+    public Figure createFigure(MovablePoint startPoint, MovablePoint endPoint) {
+        return new DrawableMovableSquare(startPoint, endPoint);
     }
 }

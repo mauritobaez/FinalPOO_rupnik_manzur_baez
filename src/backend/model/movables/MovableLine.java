@@ -15,8 +15,8 @@ public class MovableLine extends Line implements MovableFigure {
     @Override
     public Collection<MovablePoint> getPoints() {
         Collection<MovablePoint> out= new ArrayList<>();
-        out.add((MovablePoint) getstartingPoint());
-        out.add((MovablePoint) getendingPoint());
+        out.add((MovablePoint) getStartingPoint());
+        out.add((MovablePoint) getEndingPoint());
         return out;
     }
 }

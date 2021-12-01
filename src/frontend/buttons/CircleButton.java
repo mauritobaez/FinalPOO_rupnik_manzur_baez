@@ -3,6 +3,9 @@ package frontend.buttons;
 import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
+import backend.model.movables.MovablePoint;
+import frontend.DrawableMovable.DrawableMovableCircle;
+import frontend.DrawableMovable.DrawableMovableFigure;
 
 public class CircleButton extends FigureButton{
 
@@ -12,7 +15,7 @@ public class CircleButton extends FigureButton{
     }
 
     @Override
-    public Figure createFigure(Point startPoint, Point endPoint) {
-        return new Circle(startPoint, startPoint.distanceTo(endPoint));
+    public Figure createFigure(MovablePoint startPoint, MovablePoint endPoint) {
+        return new DrawableMovableCircle(startPoint, startPoint.distanceTo(endPoint));
     }
 }

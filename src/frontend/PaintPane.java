@@ -167,7 +167,7 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
-		slider.setOnDragExited(event -> {
+		slider.setOnMouseReleased(event -> {
 			if(selectionButton.isSelected())
 			{
 				if(selectedFigure==null) return;

@@ -1,10 +1,8 @@
 package frontend;
 
 import backend.CanvasState;
-import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
-import backend.model.Rectangle;
 import backend.model.movables.MovableFigure;
 import backend.model.movables.MovablePoint;
 import frontend.drawablemovable.DrawableMovableFigure;
@@ -70,14 +68,14 @@ public class PaintPane extends BorderPane {
 		Slider slider = new Slider(1,50,1);
 		slider.setShowTickMarks(true);
 		slider.setShowTickLabels(true);
-		ColorPicker borderColor = new ColorPicker(lineColor);
+		ColorPicker borderColorPicker = new ColorPicker(lineColor);
 		Label fillLabel = new Label("Relleno");
 		ColorPicker fillColorPicker = new ColorPicker(fillColor);
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
 		buttonsBox.getChildren().add(borderLabel);
 		buttonsBox.getChildren().add(slider);
-		buttonsBox.getChildren().add(borderColor);
+		buttonsBox.getChildren().add(borderColorPicker);
 		buttonsBox.getChildren().add(fillLabel);
 		buttonsBox.getChildren().add(fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
@@ -102,7 +100,7 @@ public class PaintPane extends BorderPane {
 					newFigure = button.createFigure(startPoint,endPoint);
 					DrawableMovableFigure dmFig = (DrawableMovableFigure) newFigure; //casteo seguro! :D
 					dmFig.setFillColor(fillColorPicker.getValue());
-					dmFig.setStrokeColor(borderColor.getValue());
+					dmFig.setStrokeColor(borderColorPicker.getValue());
 					dmFig.setStrokeWidth(slider.getValue());
 					canvasState.addFigure(newFigure);
 					startPoint = null;
@@ -123,7 +121,6 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(eventPoint.toString());
 			}
 		});
-
 		canvas.setOnMouseClicked(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
@@ -152,6 +149,7 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -167,25 +165,10 @@ public class PaintPane extends BorderPane {
 			}
 			gc.setLineWidth(dmfigure.getStrokeWidth());
 			gc.setFill(dmfigure.getFillColor());
-			//DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
 			dmfigure.drawFigure(gc);
 
 		}
 	}
-	/* No se usa
-	boolean figureBelongs(Figure figure, Point eventPoint) {
-		boolean found = false;
-		if(figure instanceof Rectangle) {
-			Rectangle rectangle = (Rectangle) figure;
-			found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&
-					eventPoint.getY() > rectangle.getTopLeft().getY() && eventPoint.getY() < rectangle.getBottomRight().getY();
-		} else if(figure instanceof Circle) {
-			Circle circle = (Circle) figure;
-			found = Math.sqrt(Math.pow(circle.getCenterPoint().getX() - eventPoint.getX(), 2) +
-					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
-		}
-		return found;
-	}*/
 
 	//auxiliar que devuelve la figura sobre la cual está el mouse
 	private Figure figureAtPosition(Point position){

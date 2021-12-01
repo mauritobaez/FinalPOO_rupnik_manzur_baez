@@ -1,5 +1,6 @@
 package frontend.drawablemovable;
 
+import backend.model.Point;
 import backend.model.movables.MovableEllipse;
 import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
@@ -48,5 +49,10 @@ public class DrawableMovableEllipse extends MovableEllipse implements DrawableMo
     @Override
     public void setStrokeWidth(double width) {
         this.strokeWidth = width;
+    }
+
+    @Override
+    public boolean isContained(Point topLeft, Point bottomRight) {
+        return isContainedOval(topLeft,bottomRight,getCenterPoint(),getsXAxis(),getsYAxis());
     }
 }

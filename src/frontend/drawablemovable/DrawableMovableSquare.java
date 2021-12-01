@@ -1,5 +1,6 @@
 package frontend.drawablemovable;
 
+import backend.model.Point;
 import backend.model.PointsDoNotFormASquareException;
 import backend.model.movables.MovablePoint;
 import backend.model.movables.MovableSquare;
@@ -49,5 +50,9 @@ public class DrawableMovableSquare extends MovableSquare implements DrawableMova
     @Override
     public void setStrokeWidth(double width) {
         this.strokeWidth = width;
+    }
+    @Override
+    public boolean isContained(Point topLeft, Point bottomRight) {
+        return isContainedRect(topLeft,bottomRight,getTopLeft(),getBottomRight());
     }
 }

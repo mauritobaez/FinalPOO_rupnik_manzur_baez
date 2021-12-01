@@ -1,5 +1,6 @@
 package frontend.drawablemovable;
 
+import backend.model.Point;
 import backend.model.movables.MovableLine;
 import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
@@ -49,5 +50,10 @@ public class DrawableMovableLine extends MovableLine implements DrawableMovableF
     @Override
     public void setStrokeWidth(double width) {
         this.strokeWidth = width;
+    }
+
+    @Override
+    public boolean isContained(Point topLeft, Point bottomRight) {//No se si funca
+    return isContainedRect(topLeft,bottomRight,getStartingPoint(),getEndingPoint())||isContainedRect(topLeft,bottomRight,getEndingPoint(),getStartingPoint());
     }
 }

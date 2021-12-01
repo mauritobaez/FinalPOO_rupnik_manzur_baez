@@ -1,5 +1,6 @@
 package frontend.drawablemovable;
 
+import backend.model.Point;
 import backend.model.movables.MovablePoint;
 import backend.model.movables.MovableRectangle;
 import javafx.scene.canvas.GraphicsContext;
@@ -48,5 +49,10 @@ public class DrawableMovableRectangle extends MovableRectangle implements Drawab
     @Override
     public void setStrokeWidth(double width) {
         this.strokeWidth = width;
+    }
+
+    @Override
+    public boolean isContained(Point topLeft, Point bottomRight) {
+       return isContainedRect(topLeft,bottomRight,getTopLeft(),getBottomRight());
     }
 }

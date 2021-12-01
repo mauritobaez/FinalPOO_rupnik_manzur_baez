@@ -1,5 +1,6 @@
 package frontend.drawablemovable;
 
+import backend.model.Point;
 import backend.model.movables.MovableCircle;
 import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
@@ -49,5 +50,10 @@ public class DrawableMovableCircle extends MovableCircle implements DrawableMova
     @Override
     public void setStrokeWidth(double width) {
         this.strokeWidth = width;
+    }
+
+    @Override
+    public boolean isContained(Point topLeft, Point bottomRight) {
+        return isContainedOval(topLeft,bottomRight,getCenterPoint(),getsXAxis(),getsYAxis());
     }
 }

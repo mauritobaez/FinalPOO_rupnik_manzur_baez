@@ -31,9 +31,9 @@ public class Ellipse extends Figure {
 
     @Override
     public boolean pointInFigure(Point point) {
-        int p = ((int)Math.pow((point.getX() - centerPoint.getX()), 2) / (int)Math.pow(sXAxis, 2))
-                + ((int)Math.pow((point.getY() - centerPoint.getY()), 2) / (int)Math.pow(sYAxis, 2));
+        double p = (Math.pow((point.getX() - centerPoint.getX()), 2) / Math.pow(sXAxis, 2))
+                + (Math.pow((point.getY() - centerPoint.getY()), 2) / Math.pow(sYAxis, 2));
 
-        return p<=1;
+        return Double.compare(p,1.0) <1;
     }
 }

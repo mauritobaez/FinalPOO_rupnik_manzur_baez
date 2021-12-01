@@ -20,4 +20,9 @@ public class Line extends Figure{
     public String toString() {
         return String.format("Línea [ %s , %s ]", startingPoint, endingPoint);
     }
+
+    @Override
+    public boolean pointInFigure(Point point) {
+        return false;
+    }
 }

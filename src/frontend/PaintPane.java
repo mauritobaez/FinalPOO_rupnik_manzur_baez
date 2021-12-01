@@ -5,6 +5,9 @@ import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
+import backend.model.movables.MovableFigure;
+import backend.model.movables.MovablePoint;
+import frontend.DrawableMovable.DrawableMovableFigure;
 import frontend.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -38,7 +41,7 @@ public class PaintPane extends BorderPane {
 
 
 	// Dibujar una figura
-	Point startPoint;
+	MovablePoint startPoint;
 
 	// Seleccionar una figura
 	Figure selectedFigure;
@@ -84,10 +87,10 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(1);
 		canvas.setOnMousePressed(event -> {
-			startPoint = new Point(event.getX(), event.getY());
+			startPoint = new MovablePoint(event.getX(), event.getY());
 		});
 		canvas.setOnMouseReleased(event -> {
-			Point endPoint = new Point(event.getX(), event.getY());
+			MovablePoint endPoint = new MovablePoint(event.getX(), event.getY());
 			if(startPoint == null) {
 				return ;
 			}
@@ -140,19 +143,10 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				//lol instanceof
-				if(selectedFigure instanceof Rectangle) {
-					Rectangle rectangle = (Rectangle) selectedFigure;
-					rectangle.getTopLeft().x += diffX;
-					rectangle.getBottomRight().x += diffX;
-					rectangle.getTopLeft().y += diffY;
-					rectangle.getBottomRight().y += diffY;
-				} else if(selectedFigure instanceof Circle) {
-					//jsjajajaj wtfff
-					Circle circle = (Circle) selectedFigure;
-					circle.getCenterPoint().x += diffX;
-					circle.getCenterPoint().y += diffY;
-				}
+				if(selectedFigure==null) return;
+				MovableFigure figure = (MovableFigure) selectedFigure;
+				figure.moveX(diffX);
+				figure.moveY(diffY);
 				redrawCanvas();
 			}
 		});
@@ -169,18 +163,9 @@ public class PaintPane extends BorderPane {
 				gc.setStroke(lineColor);
 			}
 			gc.setFill(fillColor);
-			if(figure instanceof Rectangle) {
-				Rectangle rectangle = (Rectangle) figure;
-				gc.fillRect(rectangle.getTopLeft().getX(), rectangle.getTopLeft().getY(),
-						Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-				gc.strokeRect(rectangle.getTopLeft().getX(), rectangle.getTopLeft().getY(),
-						Math.abs(rectangle.getTopLeft().getX() - rectangle.getBottomRight().getX()), Math.abs(rectangle.getTopLeft().getY() - rectangle.getBottomRight().getY()));
-			} else if(figure instanceof Circle) {
-				Circle circle = (Circle) figure;
-				double diameter = circle.getRadius() * 2;
-				gc.fillOval(circle.getCenterPoint().getX() - circle.getRadius(), circle.getCenterPoint().getY() - circle.getRadius(), diameter, diameter);
-				gc.strokeOval(circle.getCenterPoint().getX() - circle.getRadius(), circle.getCenterPoint().getY() - circle.getRadius(), diameter, diameter);
-			}
+			DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
+			dmfigure.drawFigure(gc);
+			
 		}
 	}
 

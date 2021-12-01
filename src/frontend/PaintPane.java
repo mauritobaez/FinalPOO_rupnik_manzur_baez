@@ -70,16 +70,16 @@ public class PaintPane extends BorderPane {
 		Slider slider = new Slider(1,50,1);
 		slider.setShowTickMarks(true);
 		slider.setShowTickLabels(true);
-		ColorPicker borderColor = new ColorPicker(Color.BLACK);
+		ColorPicker borderColor = new ColorPicker(lineColor);
 		Label fillLabel = new Label("Relleno");
-		ColorPicker fillColor = new ColorPicker(Color.YELLOW);
+		ColorPicker fillColorPicker = new ColorPicker(fillColor);
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
 		buttonsBox.getChildren().add(borderLabel);
 		buttonsBox.getChildren().add(slider);
 		buttonsBox.getChildren().add(borderColor);
 		buttonsBox.getChildren().add(fillLabel);
-		buttonsBox.getChildren().add(fillColor);
+		buttonsBox.getChildren().add(fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
@@ -100,6 +100,10 @@ public class PaintPane extends BorderPane {
 				if(button.isSelected())
 				{
 					newFigure = button.createFigure(startPoint,endPoint);
+					DrawableMovableFigure dmFig = (DrawableMovableFigure) newFigure; //casteo seguro! :D
+					dmFig.setFillColor(fillColorPicker.getValue());
+					dmFig.setStrokeColor(borderColor.getValue());
+					dmFig.setStrokeWidth(slider.getValue());
 					canvasState.addFigure(newFigure);
 					startPoint = null;
 					redrawCanvas();
@@ -155,13 +159,15 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
+			DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
 			if(figure == selectedFigure) {
 				gc.setStroke(Color.RED);
 			} else {
-				gc.setStroke(lineColor);
+				gc.setStroke(dmfigure.getStrokeColor());
 			}
-			gc.setFill(fillColor);
-			DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
+			gc.setLineWidth(dmfigure.getStrokeWidth());
+			gc.setFill(dmfigure.getFillColor());
+			//DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
 			dmfigure.drawFigure(gc);
 
 		}

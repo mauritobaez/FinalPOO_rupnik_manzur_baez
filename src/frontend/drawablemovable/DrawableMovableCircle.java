@@ -5,6 +5,7 @@ import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+
 public class DrawableMovableCircle extends MovableCircle implements DrawableMovableFigure {
 
     private Color fillColor;

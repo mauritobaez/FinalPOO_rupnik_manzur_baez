@@ -1,5 +1,6 @@
 package frontend.drawablemovable;
 
+import backend.model.PointsDoNotFormASquareException;
 import backend.model.movables.MovablePoint;
 import backend.model.movables.MovableSquare;
 import javafx.scene.canvas.GraphicsContext;
@@ -11,7 +12,7 @@ public class DrawableMovableSquare extends MovableSquare implements DrawableMova
     private Color strokeColor;
     private double strokeWidth;
 
-    public DrawableMovableSquare(MovablePoint topLeft, MovablePoint bottomRight) {
+    public DrawableMovableSquare(MovablePoint topLeft, MovablePoint bottomRight) throws PointsDoNotFormASquareException {
         super(topLeft, bottomRight);
     }
 

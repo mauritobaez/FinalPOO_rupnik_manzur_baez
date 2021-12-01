@@ -2,8 +2,10 @@ package backend.model;
 
 public class Square extends Rectangle {
 
-    public Square(Point topLeft, Point finalPoint) {
-        super(topLeft, new Point(finalPoint.getX(), topLeft.getY() + topLeft.getXDifferenceTo(finalPoint)));
+    public Square(Point topLeft, Point bottomRight) throws PointsDoNotFormASquareException{
+        super(topLeft, bottomRight);
+        if(Double.compare(topLeft.getXDifferenceTo(bottomRight), topLeft.getYDifferenceTo(bottomRight))!=0)
+            throw new PointsDoNotFormASquareException();
     }
 
     @Override

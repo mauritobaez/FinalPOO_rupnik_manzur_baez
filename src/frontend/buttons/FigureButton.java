@@ -6,10 +6,18 @@ import backend.model.movables.MovablePoint;
 import javafx.scene.control.ToggleButton;
 
 public abstract class FigureButton extends ToggleButton {
-    public FigureButton(String name) {
+
+    private final boolean freeDirectionForCreation;
+
+    public FigureButton(String name, boolean freeDirectionForCreation) {
         super(name);
+        this.freeDirectionForCreation = freeDirectionForCreation;
     }
 
     public abstract Figure createFigure(MovablePoint startPoint, MovablePoint endPoint); //Debería ser un DrawableMovableFigure
+
+    public boolean isFreeDirectionForCreation(){
+        return freeDirectionForCreation;
+    }
 }
 

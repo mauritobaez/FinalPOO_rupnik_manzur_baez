@@ -6,7 +6,7 @@ import frontend.drawablemovable.DrawableMovableLine;
 
 public class LineButton extends FigureButton{
     public LineButton(String name) {
-        super(name);
+        super(name, true);
     }
 
     @Override

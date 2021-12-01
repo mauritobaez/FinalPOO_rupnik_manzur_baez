@@ -6,7 +6,7 @@ import frontend.drawablemovable.DrawableMovableSquare;
 
 public class SquareButton extends FigureButton{
     public SquareButton(String name) {
-        super(name);
+        super(name,false);
     }
 
     @Override

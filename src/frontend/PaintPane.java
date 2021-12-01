@@ -48,11 +48,10 @@ public class PaintPane extends BorderPane {
 	StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
-		LineButton myLineButton = new LineButton("Línea");
 		figureButtons.add(new RectangleButton("Rectángulo"));
 		figureButtons.add(new CircleButton("Círculo"));
 		figureButtons.add(new SquareButton("Cuadrado"));
-		figureButtons.add(myLineButton);
+		figureButtons.add(new LineButton("Línea"));
 		figureButtons.add(new EllipseButton("Elipse"));
 
 		this.canvasState = canvasState;
@@ -93,13 +92,13 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null) {
 				return ;
 			}
-			if((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !myLineButton.isSelected()) {
-				return ;
-			}
+			boolean needFree= endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY();
 			Figure newFigure = null;
 			for (FigureButton button : figureButtons ) {
 				if(button.isSelected())
 				{
+					if(needFree && !button.isFreeDirectionForCreation())
+						return;
 					newFigure = button.createFigure(startPoint,endPoint);
 					DrawableMovableFigure dmFig = (DrawableMovableFigure) newFigure; //casteo seguro! :D
 					dmFig.setFillColor(fillColorPicker.getValue());

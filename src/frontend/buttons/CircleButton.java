@@ -8,7 +8,7 @@ public class CircleButton extends FigureButton{
 
 
     public CircleButton(String name) {
-        super(name);
+        super(name, true);
     }
 
     @Override

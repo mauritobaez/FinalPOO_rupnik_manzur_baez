@@ -6,7 +6,7 @@ import frontend.drawablemovable.DrawableMovableEllipse;
 
 public class EllipseButton extends FigureButton{
     public EllipseButton(String name) {
-        super(name);
+        super(name,false);
     }
 
     @Override

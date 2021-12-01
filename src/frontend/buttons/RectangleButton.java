@@ -6,7 +6,7 @@ import frontend.drawablemovable.DrawableMovableRectangle;
 
 public class RectangleButton extends FigureButton{
     public RectangleButton(String name) {
-        super(name);
+        super(name,false);
     }
 
     @Override

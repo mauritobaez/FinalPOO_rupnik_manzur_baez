@@ -7,7 +7,7 @@ import backend.model.Point;
 import backend.model.Rectangle;
 import backend.model.movables.MovableFigure;
 import backend.model.movables.MovablePoint;
-import frontend.DrawableMovable.DrawableMovableFigure;
+import frontend.drawablemovable.DrawableMovableFigure;
 import frontend.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -18,8 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.util.Iterator;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,7 +163,7 @@ public class PaintPane extends BorderPane {
 			gc.setFill(fillColor);
 			DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
 			dmfigure.drawFigure(gc);
-			
+
 		}
 	}
 

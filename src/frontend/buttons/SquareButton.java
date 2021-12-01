@@ -1,11 +1,8 @@
 package frontend.buttons;
 
 import backend.model.Figure;
-import backend.model.Point;
-import backend.model.Square;
 import backend.model.movables.MovablePoint;
-import frontend.DrawableMovable.DrawableMovableFigure;
-import frontend.DrawableMovable.DrawableMovableSquare;
+import frontend.drawablemovable.DrawableMovableSquare;
 
 public class SquareButton extends FigureButton{
     public SquareButton(String name) {

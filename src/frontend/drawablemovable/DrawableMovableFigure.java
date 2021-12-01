@@ -1,4 +1,4 @@
-package frontend.DrawableMovable;
+package frontend.drawablemovable;
 
 import backend.model.Point;
 import backend.model.movables.MovableFigure;

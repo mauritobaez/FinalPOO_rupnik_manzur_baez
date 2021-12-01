@@ -3,7 +3,6 @@ package frontend.buttons;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.movables.MovablePoint;
-import frontend.DrawableMovable.DrawableMovableFigure;
 import javafx.scene.control.ToggleButton;
 
 public abstract class FigureButton extends ToggleButton {

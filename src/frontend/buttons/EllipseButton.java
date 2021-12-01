@@ -1,11 +1,8 @@
 package frontend.buttons;
 
-import backend.model.Ellipse;
 import backend.model.Figure;
-import backend.model.Point;
 import backend.model.movables.MovablePoint;
-import frontend.DrawableMovable.DrawableMovableEllipse;
-import frontend.DrawableMovable.DrawableMovableFigure;
+import frontend.drawablemovable.DrawableMovableEllipse;
 
 public class EllipseButton extends FigureButton{
     public EllipseButton(String name) {

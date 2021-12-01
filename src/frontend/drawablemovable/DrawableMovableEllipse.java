@@ -1,23 +1,23 @@
-package frontend.DrawableMovable;
+package frontend.drawablemovable;
 
+import backend.model.movables.MovableEllipse;
 import backend.model.movables.MovablePoint;
-import backend.model.movables.MovableSquare;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DrawableMovableSquare extends MovableSquare implements DrawableMovableFigure{
+public class DrawableMovableEllipse extends MovableEllipse implements DrawableMovableFigure{
 
     private Color fillColor;
     private Color strokeColor;
     private double strokeWidth;
 
-    public DrawableMovableSquare(MovablePoint topLeft, MovablePoint bottomRight) {
-        super(topLeft, bottomRight);
+    public DrawableMovableEllipse(MovablePoint centerPoint, double sMayorAxis, double sMinorAxis) {
+        super(centerPoint, sMayorAxis, sMinorAxis);
     }
 
     @Override
     public void drawFigure(GraphicsContext gc) {
-        drawRect(gc, getTopLeft(), getBottomRight());
+        drawOval(gc, getCenterPoint(), getsXAxis(), getsYAxis());
     }
 
     @Override

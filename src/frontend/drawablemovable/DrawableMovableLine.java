@@ -1,23 +1,24 @@
-package frontend.DrawableMovable;
+package frontend.drawablemovable;
 
-import backend.model.movables.MovableCircle;
+import backend.model.movables.MovableLine;
 import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DrawableMovableCircle extends MovableCircle implements DrawableMovableFigure {
+// MovableLine
+public class DrawableMovableLine extends MovableLine implements DrawableMovableFigure {
 
     private Color fillColor;
     private Color strokeColor;
     private double strokeWidth;
 
-    public DrawableMovableCircle(MovablePoint centerPoint, double radius) {
-        super(centerPoint, radius);
+    public DrawableMovableLine(MovablePoint startingPoint, MovablePoint endingPoint) {
+        super(startingPoint, endingPoint);
     }
 
     @Override
     public void drawFigure(GraphicsContext gc) {
-        drawOval(gc, getCenterPoint(), getRadius(), getRadius());
+        drawLine(gc, getStartingPoint(), getEndingPoint());
     }
 
     @Override

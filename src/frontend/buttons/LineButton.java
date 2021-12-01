@@ -1,10 +1,8 @@
 package frontend.buttons;
 
 import backend.model.Figure;
-import backend.model.Line;
-import backend.model.Point;
 import backend.model.movables.MovablePoint;
-import frontend.DrawableMovable.DrawableMovableLine;
+import frontend.drawablemovable.DrawableMovableLine;
 
 public class LineButton extends FigureButton{
     public LineButton(String name) {

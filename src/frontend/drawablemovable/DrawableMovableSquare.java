@@ -1,17 +1,17 @@
-package frontend.DrawableMovable;
+package frontend.drawablemovable;
 
 import backend.model.movables.MovablePoint;
-import backend.model.movables.MovableRectangle;
+import backend.model.movables.MovableSquare;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DrawableMovableRectangle extends MovableRectangle implements DrawableMovableFigure{
+public class DrawableMovableSquare extends MovableSquare implements DrawableMovableFigure{
 
     private Color fillColor;
     private Color strokeColor;
     private double strokeWidth;
 
-    public DrawableMovableRectangle(MovablePoint topLeft, MovablePoint bottomRight) {
+    public DrawableMovableSquare(MovablePoint topLeft, MovablePoint bottomRight) {
         super(topLeft, bottomRight);
     }
 

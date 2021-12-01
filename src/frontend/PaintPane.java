@@ -95,18 +95,17 @@ public class PaintPane extends BorderPane {
 				return ;
 			}
 			Figure newFigure = null;
-			boolean noneSelected = true;
 			for (FigureButton button : figureButtons ) {
 				if(button.isSelected())
 				{
 					newFigure = button.createFigure(startPoint,endPoint);
-					noneSelected = false;
+					canvasState.addFigure(newFigure);
+					startPoint = null;
+					redrawCanvas();
+					return;
 				}
 			}
-			if(noneSelected) return;
-			canvasState.addFigure(newFigure);
-			startPoint = null;
-			redrawCanvas();
+
 		});
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());

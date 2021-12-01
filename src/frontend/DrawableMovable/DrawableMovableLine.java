@@ -5,9 +5,15 @@ import backend.model.Point;
 import backend.model.movables.MovableLine;
 import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 // MovableLine
 public class DrawableMovableLine extends MovableLine implements DrawableMovableFigure {
+
+    private Color fillColor;
+    private Color strokeColor;
+    private double strokeWidth;
+
     public DrawableMovableLine(MovablePoint startingPoint, MovablePoint endingPoint) {
         super(startingPoint, endingPoint);
     }
@@ -15,5 +21,35 @@ public class DrawableMovableLine extends MovableLine implements DrawableMovableF
     @Override
     public void drawFigure(GraphicsContext gc) {
         drawLine(gc, getStartingPoint(), getEndingPoint());
+    }
+
+    @Override
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    @Override
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    @Override
+    public Color getStrokeColor() {
+        return strokeColor;
+    }
+
+    @Override
+    public void setStrokeColor(Color strokeColor) {
+        this.strokeColor = strokeColor;
+    }
+
+    @Override
+    public double getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    @Override
+    public void setStrokeWidth(double width) {
+        this.strokeWidth = width;
     }
 }

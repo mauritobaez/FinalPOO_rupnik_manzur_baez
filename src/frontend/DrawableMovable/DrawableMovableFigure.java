@@ -3,9 +3,18 @@ package frontend.DrawableMovable;
 import backend.model.Point;
 import backend.model.movables.MovableFigure;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public interface DrawableMovableFigure extends MovableFigure {
+
     void drawFigure(GraphicsContext gc);
+    Color getFillColor();
+    void setFillColor(Color fillColor);
+    Color getStrokeColor();
+    void setStrokeColor(Color strokeColor);
+    double getStrokeWidth();
+    void setStrokeWidth(double width);
+
     default void drawRect(GraphicsContext gc, Point topLeft, Point bottomRight)
     {
         gc.fillRect(topLeft.getX(), topLeft.getY(), topLeft.getXDifferenceTo(bottomRight), topLeft.getYDifferenceTo(bottomRight));

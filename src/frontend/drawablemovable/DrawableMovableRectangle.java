@@ -1,26 +1,23 @@
-package frontend.DrawableMovable;
+package frontend.drawablemovable;
 
-import backend.model.Line;
-import backend.model.Point;
-import backend.model.movables.MovableLine;
 import backend.model.movables.MovablePoint;
+import backend.model.movables.MovableRectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-// MovableLine
-public class DrawableMovableLine extends MovableLine implements DrawableMovableFigure {
+public class DrawableMovableRectangle extends MovableRectangle implements DrawableMovableFigure{
 
     private Color fillColor;
     private Color strokeColor;
     private double strokeWidth;
 
-    public DrawableMovableLine(MovablePoint startingPoint, MovablePoint endingPoint) {
-        super(startingPoint, endingPoint);
+    public DrawableMovableRectangle(MovablePoint topLeft, MovablePoint bottomRight) {
+        super(topLeft, bottomRight);
     }
 
     @Override
     public void drawFigure(GraphicsContext gc) {
-        drawLine(gc, getStartingPoint(), getEndingPoint());
+        drawRect(gc, getTopLeft(), getBottomRight());
     }
 
     @Override

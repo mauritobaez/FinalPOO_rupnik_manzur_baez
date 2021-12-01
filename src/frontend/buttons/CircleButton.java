@@ -1,11 +1,8 @@
 package frontend.buttons;
 
-import backend.model.Circle;
 import backend.model.Figure;
-import backend.model.Point;
 import backend.model.movables.MovablePoint;
-import frontend.DrawableMovable.DrawableMovableCircle;
-import frontend.DrawableMovable.DrawableMovableFigure;
+import frontend.drawablemovable.DrawableMovableCircle;
 
 public class CircleButton extends FigureButton{
 

@@ -110,6 +110,7 @@ public class PaintPane extends BorderPane {
 			for (FigureButton button : figureButtons ) {
 				if(button.isSelected())
 				{
+					selectedFigures.clear();
 					if(needFree && !button.isFreeDirectionForCreation())
 						return;
 					newFigure = button.createFigure(startPoint,endPoint);

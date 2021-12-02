@@ -1,13 +1,12 @@
 package backend.model;
 
 public class Square extends Rectangle {
-
+private static final Double EPSILON=0.01;
     public Square(Point topLeft, Point bottomRight) throws PointsDoNotFormASquareException{
         super(topLeft, bottomRight);
-        if(Double.compare(topLeft.getXDifferenceTo(bottomRight), topLeft.getYDifferenceTo(bottomRight))!=0)
+        if(Math.abs(topLeft.getXDifferenceTo(bottomRight)-topLeft.getYDifferenceTo(bottomRight))>EPSILON)
             throw new PointsDoNotFormASquareException();
     }
-
     @Override
     public String toString() {
         return String.format("Cuadrado [ %s , %s ]", getTopLeft(), getBottomRight());

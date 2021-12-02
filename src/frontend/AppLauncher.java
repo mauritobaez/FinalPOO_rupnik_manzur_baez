@@ -17,6 +17,7 @@ public class AppLauncher extends Application {
 		CanvasState canvasState = new CanvasState(); // BackEnd
 		MainFrame frame = new MainFrame(canvasState);
 		Scene scene = new Scene(frame);
+		primaryStage.setTitle("Totally Not Paint");
 		primaryStage.setResizable(false); // hacer que se arreglen solas las dimensiones
 		primaryStage.setScene(scene);
 		primaryStage.show();

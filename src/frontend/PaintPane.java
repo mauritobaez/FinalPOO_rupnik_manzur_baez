@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PaintPane extends BorderPane {
@@ -43,10 +44,11 @@ public class PaintPane extends BorderPane {
 	MovablePoint startPoint;
 
 	// Seleccionar una figura
-	Figure selectedFigure;
+	Collection<Figure> selectedFigures;
 
 	// StatusBar
 	StatusPane statusPane;
+	boolean multipleSelectionInProcess=false;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		figureButtons.add(new RectangleButton("Rectángulo"));
@@ -57,6 +59,7 @@ public class PaintPane extends BorderPane {
 
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+		this.selectedFigures=new ArrayList<>();
 
 		List<ToggleButton> toolsArr = new ArrayList<>();
 		toolsArr.add(selectionButton);
@@ -120,6 +123,21 @@ public class PaintPane extends BorderPane {
 					return;
 				}
 			}
+			if(selectionButton.isSelected()&&!needFree){
+				StringBuilder label = new StringBuilder("Se seleccionó: ");
+				for (Figure figure: canvasState.figures()){
+					DrawableMovableFigure dwfigure=(DrawableMovableFigure)figure;//Casteo seguro
+					if(dwfigure.isContained(startPoint,endPoint)){
+						multipleSelectionInProcess=true;
+						selectedFigures.add(figure);
+						statusPane.updateStatus(label.append(figure).toString());
+					}
+				}
+				if(selectedFigures.isEmpty()){
+					statusPane.updateStatus("Ninguna figura encontrada");
+				}
+				redrawCanvas();
+			}
 
 		});
 		canvas.setOnMouseMoved(event -> {
@@ -139,11 +157,15 @@ public class PaintPane extends BorderPane {
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				Figure result = figureAtPosition(eventPoint);
-				if (result!=null) {
-					selectedFigure=result;
+				if (result!=null && !multipleSelectionInProcess) {///agregar empty para que no agregue mas de una
+					selectedFigures.clear();
+					selectedFigures.add(result);
 					statusPane.updateStatus(label.append(result).toString());
-				} else {
-					selectedFigure = null;
+				}else {if(multipleSelectionInProcess){
+						multipleSelectionInProcess=false;
+						return;
+					}
+					selectedFigures.clear();
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
@@ -155,52 +177,66 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				MovableFigure figure = (MovableFigure) selectedFigure;
-				figure.moveX(diffX);
-				figure.moveY(diffY);
+				for(Figure figure: selectedFigures) {
+					MovableFigure Mfigure = (MovableFigure) figure;//Casteo seguro
+					Mfigure.moveX(diffX);
+					Mfigure.moveY(diffY);
+				}
 				redrawCanvas();
 		});
 		fillColorPicker.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				return;
-			DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
-			figure.setFillColor(fillColorPicker.getValue());
+			for(Figure figure :selectedFigures) {
+				DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
+				dmfigure.setFillColor(fillColorPicker.getValue());
+			}
 			redrawCanvas();
 
 		});
 		borderColorPicker.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 			return;
-				DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
-				figure.setStrokeColor(borderColorPicker.getValue());
+			for(Figure figure :selectedFigures) {
+				DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
+				dmfigure.setStrokeColor(borderColorPicker.getValue());
+			}
 				redrawCanvas();
 		});
 		slider.setOnMouseReleased(event -> {
 			if(!checkSelectedAndNull())
 				return;
-			DrawableMovableFigure figure = (DrawableMovableFigure) selectedFigure;
-			figure.setStrokeWidth(slider.getValue());
+			for(Figure figure :selectedFigures) {
+				DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
+				dmfigure.setStrokeWidth(slider.getValue());
+			}
 			redrawCanvas();
 		});
 		toFrontButton.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				 return;
-			canvasState.moveFigureToLast(selectedFigure);
+			for(Figure figure :selectedFigures) {
+				canvasState.moveFigureToLast(figure);
+			}
 			redrawCanvas();
 		});
 		toBackButton.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				return;
-			canvasState.moveFigureToFirst(selectedFigure);
+			for(Figure figure :selectedFigures) {
+				canvasState.moveFigureToFirst(figure);
+			}
 			redrawCanvas();
 
 		});
 		deleteButton.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				 return;
-			canvasState.remove(selectedFigure);
+			for(Figure figure :selectedFigures) {
+				canvasState.remove(figure);
+			}
+			selectedFigures.clear();
 			redrawCanvas();
-
 		});
 		setLeft(buttonsBox);
 		setRight(canvas);
@@ -210,7 +246,7 @@ public class PaintPane extends BorderPane {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
 			DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
-			if(figure == selectedFigure) {
+			if(selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(dmfigure.getStrokeColor());
@@ -235,7 +271,7 @@ public class PaintPane extends BorderPane {
 	}
 
 	private boolean checkSelectedAndNull(){
-		return selectionButton.isSelected() && selectedFigure!=null;
+		return selectionButton.isSelected() && !selectedFigures.isEmpty();
 	}
 
 }

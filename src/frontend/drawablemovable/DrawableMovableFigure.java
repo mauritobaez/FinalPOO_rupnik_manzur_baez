@@ -21,7 +21,6 @@ public interface DrawableMovableFigure extends MovableFigure {
 
     default boolean isContainedRect(Point topLeft, Point bottomRight, Point topLeftOfFigure, Point bottomRightOfFigure)
     {
-        System.out.println(topLeft.getXDifferenceTo(topLeftOfFigure));
         return (topLeft.getXDifferenceTo(topLeftOfFigure) > 0 && topLeft.getYDifferenceTo(topLeftOfFigure) > 0 && bottomRight.getXDifferenceTo(bottomRightOfFigure) < 0 && bottomRight.getYDifferenceTo(bottomRightOfFigure) < 0);
     }
     default boolean isContainedOval(Point topLeft, Point bottomRight, Point centerPoint, double sXAxis, double sYAxis)

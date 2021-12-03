@@ -3,6 +3,7 @@ package backend.model.movables;
 import java.util.Collection;
 
 public interface MovableFigure extends Movable{
+    //Se consiguen los puntos de la figura
     Collection<MovablePoint> getPoints();
 
     @Override

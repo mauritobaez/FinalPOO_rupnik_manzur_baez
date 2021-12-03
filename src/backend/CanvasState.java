@@ -33,7 +33,7 @@ public class CanvasState {
         return new ArrayList<>(list);
     }
 
-    // Para iterar "al revés"
+    // Para iterar "al revés", primero aparecerán los de "más arriba"
     public Iterable<Figure> figuresReverse(){
         Deque<Figure> myDeque = new LinkedList<>();
         for(Figure fig : list){
@@ -45,6 +45,8 @@ public class CanvasState {
 }
 
 /*
+Esta era la otra consideración que pusimos en el informe, es interesante ver
+las ventajas/desventajas que trae una implementación y la otra
 public class CanvasState extends LinkedList<Figure> {
 
 

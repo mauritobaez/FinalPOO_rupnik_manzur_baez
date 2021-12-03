@@ -20,8 +20,10 @@ public class AppLauncher extends Application {
 		CanvasState canvasState = new CanvasState(); // BackEnd
 		MainFrame frame = new MainFrame(canvasState);
 		Scene scene = new Scene(frame);
+		// Título para que Microsoft no nos demande
 		primaryStage.setTitle("Totally Not Paint");
-		primaryStage.setResizable(false); // hacer que se arreglen solas las dimensiones
+		primaryStage.setResizable(false);
+		// Imagen del perro de "This is fine."
 		Image icon = new Image("/frontend/icon.png");
 		primaryStage.getIcons().add(icon);
 		primaryStage.setScene(scene);

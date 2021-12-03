@@ -43,3 +43,41 @@ public class CanvasState {
     }
 
 }
+
+/*
+public class CanvasState extends LinkedList<Figure> {
+
+
+    public void addFigure(Figure figure) {
+        addLast(figure);
+    }
+
+    public void moveFigureToFirst(Figure figure){
+        remove(figure);
+        addFirst(figure);
+    }
+
+    public void moveFigureToLast(Figure figure){
+        remove(figure);
+        addLast(figure);
+    }
+
+    public Iterable<Figure> figures() {
+        Deque<Figure> myDeque = new LinkedList<>();
+        for(Figure fig : this){
+            myDeque.addLast(fig);
+        }
+        return myDeque;
+    }
+
+    // Para iterar "al revés"
+    public Iterable<Figure> figuresReverse(){
+        Deque<Figure> myDeque = new LinkedList<>();
+        for(Figure fig : this){
+            myDeque.addFirst(fig);
+        }
+        return myDeque;
+    }
+
+}
+ */

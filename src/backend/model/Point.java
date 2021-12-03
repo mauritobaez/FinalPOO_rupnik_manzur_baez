@@ -2,7 +2,7 @@ package backend.model;
 
 public class Point {
     ///Cambio a protected de public, mala practica
-    public double x, y;
+    protected double x, y;
 
     public Point(double x, double y) {
         this.x = x;

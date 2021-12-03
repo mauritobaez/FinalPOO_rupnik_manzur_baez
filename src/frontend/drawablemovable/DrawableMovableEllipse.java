@@ -6,53 +6,62 @@ import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DrawableMovableEllipse extends MovableEllipse implements DrawableMovableFigure{
-
+public class DrawableMovableEllipse extends MovableEllipse implements DrawableMovableFigure
+{
     private Color fillColor;
     private Color strokeColor;
     private double strokeWidth;
 
-    public DrawableMovableEllipse(MovablePoint centerPoint, double sMayorAxis, double sMinorAxis) {
+    public DrawableMovableEllipse(MovablePoint centerPoint, double sMayorAxis, double sMinorAxis)
+    {
         super(centerPoint, sMayorAxis, sMinorAxis);
     }
 
     @Override
-    public void drawFigure(GraphicsContext gc) {
+    public void drawFigure(GraphicsContext gc)
+    {
         drawOval(gc, getCenterPoint(), getsXAxis(), getsYAxis());
     }
 
     @Override
-    public Color getFillColor() {
+    public Color getFillColor()
+    {
         return fillColor;
     }
 
     @Override
-    public void setFillColor(Color fillColor) {
+    public void setFillColor(Color fillColor)
+    {
         this.fillColor = fillColor;
     }
 
     @Override
-    public Color getStrokeColor() {
+    public Color getStrokeColor()
+    {
         return strokeColor;
     }
 
     @Override
-    public void setStrokeColor(Color strokeColor) {
+    public void setStrokeColor(Color strokeColor)
+    {
         this.strokeColor = strokeColor;
     }
 
     @Override
-    public double getStrokeWidth() {
+    public double getStrokeWidth()
+    {
         return strokeWidth;
     }
 
     @Override
-    public void setStrokeWidth(double width) {
+    public void setStrokeWidth(double width)
+    {
         this.strokeWidth = width;
     }
 
     @Override
-    public boolean isContained(Point topLeft, Point bottomRight) {
+    public boolean isContained(Point topLeft, Point bottomRight)
+    {
         return isContainedOval(topLeft,bottomRight,getCenterPoint(),getsXAxis(),getsYAxis());
     }
 }

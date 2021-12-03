@@ -4,12 +4,13 @@ import backend.model.Figure;
 import backend.model.movables.MovablePoint;
 import javafx.scene.control.ToggleButton;
 
-public abstract class FigureButton extends ToggleButton {
-
-    //para informar si se puede arrastrar en cualquier dirección el mouse y hacer la figura
+public abstract class FigureButton extends ToggleButton
+{
+    //Para informar si se puede arrastrar en cualquier dirección el mouse y hacer la figura
     private final boolean freeDirectionForCreation;
 
-    public FigureButton(String name, boolean freeDirectionForCreation) {
+    public FigureButton(String name, boolean freeDirectionForCreation)
+    {
         super(name);
         this.freeDirectionForCreation = freeDirectionForCreation;
     }
@@ -18,7 +19,8 @@ public abstract class FigureButton extends ToggleButton {
     // un Figure para poder usarlo en la LinkedList de CanvasState el cual es del back-end
     public abstract Figure createFigure(MovablePoint startPoint, MovablePoint endPoint);
 
-    public boolean isFreeDirectionForCreation(){
+    public boolean isFreeDirectionForCreation()
+    {
         return freeDirectionForCreation;
     }
 

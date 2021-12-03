@@ -4,13 +4,16 @@ import backend.model.Figure;
 import backend.model.movables.MovablePoint;
 import frontend.drawablemovable.DrawableMovableLine;
 
-public class LineButton extends FigureButton{
-    public LineButton(String name) {
+public class LineButton extends FigureButton
+{
+    public LineButton(String name)
+    {
         super(name, true);
     }
 
     @Override
-    public Figure createFigure(MovablePoint startPoint, MovablePoint endPoint) {
+    public Figure createFigure(MovablePoint startPoint, MovablePoint endPoint)
+    {
         return new DrawableMovableLine(startPoint, endPoint);
     }
 }

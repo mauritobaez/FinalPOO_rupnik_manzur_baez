@@ -6,11 +6,16 @@ import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+//esta interfaz básicamente cumple como simuladora de herencia múltiple, las clases que la implementan
+//ya están extendiendo a sus contrapartes Movable
 public interface DrawableMovableFigure extends MovableFigure {
+
 
     boolean isContained(Point topLeft,Point bottomRight);
     void drawFigure(GraphicsContext gc);
 
+    //Al no tener estado interno las interfaces, tenemos que asegurarnos de esta manera que toda aquella que la
+    //implemente tenga tanto un strokeColor como un fillColor y un width
     Color getFillColor();
     void setFillColor(Color fillColor);
     Color getStrokeColor();
@@ -19,6 +24,7 @@ public interface DrawableMovableFigure extends MovableFigure {
     void setStrokeWidth(double width);
 
 
+    //Para no repetir código en las clases
     default boolean isContainedRect(Point topLeft, Point bottomRight, Point topLeftOfFigure, Point bottomRightOfFigure)
     {
         return (topLeft.getXDifferenceTo(topLeftOfFigure) > 0 && topLeft.getYDifferenceTo(topLeftOfFigure) > 0 && bottomRight.getXDifferenceTo(bottomRightOfFigure) < 0 && bottomRight.getYDifferenceTo(bottomRightOfFigure) < 0);
@@ -33,6 +39,7 @@ public interface DrawableMovableFigure extends MovableFigure {
     }
 
 
+    //métodos para no repetir código en las clases que implementan a esta interfaz
     default void drawRect(GraphicsContext gc, Point topLeft, Point bottomRight)
     {
         gc.fillRect(topLeft.getX(), topLeft.getY(), topLeft.getXDifferenceTo(bottomRight), topLeft.getYDifferenceTo(bottomRight));

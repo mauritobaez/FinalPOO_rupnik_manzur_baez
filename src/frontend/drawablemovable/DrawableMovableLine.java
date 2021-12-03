@@ -6,7 +6,7 @@ import backend.model.movables.MovablePoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-// MovableLine
+
 public class DrawableMovableLine extends MovableLine implements DrawableMovableFigure {
 
     private Color fillColor;

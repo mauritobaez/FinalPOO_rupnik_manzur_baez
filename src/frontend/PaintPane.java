@@ -23,31 +23,31 @@ import java.util.List;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	CanvasState canvasState;
+	private final CanvasState canvasState;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
-	Color fillColor = Color.YELLOW;
+	private final Canvas canvas = new Canvas(800, 600);
+	private final GraphicsContext gc = canvas.getGraphicsContext2D();
+	private  Color lineColor = Color.BLACK;
+	private Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
 
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	Button deleteButton = new Button("Borrar");
-	Button toFrontButton = new Button("Al frente");
-	Button toBackButton = new Button("Al fondo");
-	List<FigureButton> figureButtons = new ArrayList<>();
+	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private final Button deleteButton = new Button("Borrar");
+	private final Button toFrontButton = new Button("Al frente");
+	private final Button toBackButton = new Button("Al fondo");
+	private final List<FigureButton> figureButtons = new ArrayList<>();
 
 
 	// Dibujar una figura
-	MovablePoint startPoint;
+	private MovablePoint startPoint;
 
 	// Seleccionar una figura
-	Collection<Figure> selectedFigures;
+	private final Collection<Figure> selectedFigures;
 
 	// StatusBar
-	StatusPane statusPane;
+	private StatusPane statusPane;
 	boolean multipleSelectionInProcess=false;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
@@ -99,9 +99,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(1);
-		canvas.setOnMousePressed(event -> {
-			startPoint = new MovablePoint(event.getX(), event.getY());
-		});
+		canvas.setOnMousePressed(event -> startPoint = new MovablePoint(event.getX(), event.getY()));
 		canvas.setOnMouseReleased(event -> {
 			MovablePoint endPoint = new MovablePoint(event.getX(), event.getY());
 			if(startPoint == null) {
@@ -110,7 +108,7 @@ public class PaintPane extends BorderPane {
 			// Las líneas y los círculos se pueden hacer con el punto final en cualquier lugar en relación
 			// con el inicial, así que de pasar esto último el booleano que indica esto se vuelve true
 			boolean needFree= endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY();
-			Figure newFigure = null;
+			Figure newFigure;
 			for (FigureButton button : figureButtons ) {
 				if(button.isSelected())
 				{
@@ -151,7 +149,6 @@ public class PaintPane extends BorderPane {
 		});
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
-			boolean found = false;
 			StringBuilder label = new StringBuilder();
 			// figureAtPosition solo devuelve una figura a diferencia de como estaba hecho en un principio
 			// de esta manera creemos que se entienden mucho más las etiquetas que aparecen abajo
@@ -168,7 +165,6 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseClicked(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				Figure result = figureAtPosition(eventPoint);
 				if (result!=null && !multipleSelectionInProcess) {

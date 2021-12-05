@@ -29,8 +29,8 @@ public class AppMenuBar extends MenuBar
         aboutMenuItem.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Acerca De");
-            alert.setHeaderText("Paint");
-            alert.setContentText("TPE Final POO Diciembre 2021");
+            alert.setHeaderText("Paint 4.0");
+            alert.setContentText("TPE Final POO Diciembre 2021 Mauro Baez/Matias Manzur/Franco Rupnik");
             alert.showAndWait();
         });
         help.getItems().add(aboutMenuItem);

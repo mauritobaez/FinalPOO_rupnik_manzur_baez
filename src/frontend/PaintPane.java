@@ -22,6 +22,7 @@ import java.util.List;
 
 public class PaintPane extends BorderPane {
 
+	// Se agregan los private aunque no cambien nada, siempre la mayor privacidad posible
 	// BackEnd
 	private final CanvasState canvasState;
 

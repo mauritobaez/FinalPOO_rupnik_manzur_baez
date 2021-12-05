@@ -21,6 +21,7 @@ public class AppLauncher extends Application {
 		Scene scene = new Scene(frame);
 		// Título para que Microsoft no nos demande
 		primaryStage.setTitle("Totally Not Paint");
+		// En la consigna no pide que sea resizable, por qué lo haríamos resizable?
 		primaryStage.setResizable(false);
 		// Imagen del perro de "This is fine."
 		Image icon = new Image("/frontend/icon.png");

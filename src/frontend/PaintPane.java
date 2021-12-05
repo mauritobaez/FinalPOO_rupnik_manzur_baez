@@ -61,6 +61,8 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 		this.selectedFigures=new ArrayList<>();
 
+		// Se agregan los botones después de determinar cómo van a estar
+		// acomodados en la pantalla
 		List<ToggleButton> toolsArr = new ArrayList<>();
 		toolsArr.add(selectionButton);
 		toolsArr.addAll(figureButtons);
@@ -105,14 +107,19 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null) {
 				return ;
 			}
+			// Las líneas y los círculos se pueden hacer con el punto final en cualquier lugar en relación
+			// con el inicial, así que de pasar esto último el booleano que indica esto se vuelve true
 			boolean needFree= endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY();
 			Figure newFigure = null;
 			for (FigureButton button : figureButtons ) {
 				if(button.isSelected())
 				{
 					selectedFigures.clear();
+					// si sucede los descripto arriba, pero la figura a poner no es ni una línea ni un
+					// círculo, entonces no hace nada
 					if(needFree && !button.isFreeDirectionForCreation())
 						return;
+					// agrega la figura con los colores establecidos / tamaño del borde y redraw-ea el canvas
 					newFigure = button.createFigure(startPoint,endPoint);
 					DrawableMovableFigure dmFig = (DrawableMovableFigure) newFigure; //casteo seguro! :D
 					dmFig.setFillColor(fillColorPicker.getValue());
@@ -124,6 +131,7 @@ public class PaintPane extends BorderPane {
 					return;
 				}
 			}
+			// para la selección múltiple es de arriba izquierda hacia abajo a la derecha
 			if(selectionButton.isSelected()&&!needFree){
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure: canvasState.figures()){
@@ -145,6 +153,8 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
+			// figureAtPosition solo devuelve una figura a diferencia de como estaba hecho en un principio
+			// de esta manera creemos que se entienden mucho más las etiquetas que aparecen abajo
 			Figure result = figureAtPosition(eventPoint);
 			if(result!=null) {
 				statusPane.updateStatus(label.append(result).toString());
@@ -152,13 +162,16 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(eventPoint.toString());
 			}
 		});
+		// esta parte es para la selección de una figura con un click, usamos una colección
+		// con tan solo un elemento para que sea más claro el código y no tengamos que hacer
+		// métodos muy similares, uno con una colección y otro con una Figura
 		canvas.setOnMouseClicked(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				Figure result = figureAtPosition(eventPoint);
-				if (result!=null && !multipleSelectionInProcess) {///agregar empty para que no agregue mas de una
+				if (result!=null && !multipleSelectionInProcess) {
 					selectedFigures.clear();
 					selectedFigures.add(result);
 					statusPane.updateStatus(label.append(result).toString());
@@ -175,16 +188,17 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if(!checkSelectedAndNull())
 				return;
-				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				for(Figure figure: selectedFigures) {
-					MovableFigure Mfigure = (MovableFigure) figure;//Casteo seguro
-					Mfigure.moveX(diffX);
-					Mfigure.moveY(diffY);
-				}
-				redrawCanvas();
+			Point eventPoint = new Point(event.getX(), event.getY());
+			double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
+			double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+			for(Figure figure: selectedFigures) {
+				MovableFigure Mfigure = (MovableFigure) figure;//Casteo seguro
+				Mfigure.moveX(diffX);
+				Mfigure.moveY(diffY);
+			}
+			redrawCanvas();
 		});
+		// Cambios de colores y del tamaño del borde con el slider
 		fillColorPicker.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				return;
@@ -197,7 +211,7 @@ public class PaintPane extends BorderPane {
 		});
 		borderColorPicker.setOnAction(event -> {
 			if(!checkSelectedAndNull())
-			return;
+				return;
 			for(Figure figure :selectedFigures) {
 				DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
 				dmfigure.setStrokeColor(borderColorPicker.getValue());
@@ -213,6 +227,10 @@ public class PaintPane extends BorderPane {
 			}
 			redrawCanvas();
 		});
+		// La profundidad de la figura viene determinada directamente por su orden
+		// dentro de la colección de CanvasState, así que si se quiere mover arriba,
+		// se la remueve de la colección y se la añade última. Para mandarla al fondo
+		// es lo mismo, pero agregandola primera
 		toFrontButton.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				 return;
@@ -230,6 +248,7 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 
 		});
+		// El borrado es simplemente eliminar la figura de canvasState
 		deleteButton.setOnAction(event -> {
 			if(!checkSelectedAndNull())
 				 return;
@@ -245,7 +264,11 @@ public class PaintPane extends BorderPane {
 
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		// Se itera por cada figura y se la imprime con el ancho del borde y colores deseados
 		for(Figure figure : canvasState.figures()) {
+			// Es seguro el casteo porque si bien canvasState tiene una colección de Figures
+			// en la misma son cargadas DrawableMovable Figures, las cuales extienden a MovableFigures
+			// las cuales extienden de Figures que extienden de Figure, así que son Figures al final del día
 			DrawableMovableFigure dmfigure = (DrawableMovableFigure) figure;
 			if(selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);

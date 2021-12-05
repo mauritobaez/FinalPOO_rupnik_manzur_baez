@@ -23,31 +23,31 @@ import java.util.List;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	CanvasState canvasState;
+	private CanvasState canvasState;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
-	Color fillColor = Color.YELLOW;
+	private Canvas canvas = new Canvas(800, 600);
+	private GraphicsContext gc = canvas.getGraphicsContext2D();
+	private Color lineColor = Color.BLACK;
+	private Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
 
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	Button deleteButton = new Button("Borrar");
-	Button toFrontButton = new Button("Al frente");
-	Button toBackButton = new Button("Al fondo");
-	List<FigureButton> figureButtons = new ArrayList<>();
+	private ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private Button deleteButton = new Button("Borrar");
+	private Button toFrontButton = new Button("Al frente");
+	private Button toBackButton = new Button("Al fondo");
+	private List<FigureButton> figureButtons = new ArrayList<>();
 
 
 	// Dibujar una figura
-	MovablePoint startPoint;
+	private MovablePoint startPoint;
 
 	// Seleccionar una figura
-	Collection<Figure> selectedFigures;
+	private Collection<Figure> selectedFigures;
 
 	// StatusBar
-	StatusPane statusPane;
+	private StatusPane statusPane;
 	boolean multipleSelectionInProcess=false;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
